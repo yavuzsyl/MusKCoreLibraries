@@ -1,0 +1,7 @@
+﻿####Fluentvalidations#####
+projedeki sınıflara ait propertylerin validasyonlarını gerçekleştirmek için kullanılacak
+neden fluent validations  tercih edilmeli zaten  asp net core a ait validasyonlar(data annotations) varken?
+1.SOC separation of concern projede farklı işler yapan sınıfların ve yapıların farklı modüllere ayrılması. Fluent validation ile sınıf içinde data annotations(attributes) kullanmak yerine, farklı sınıflar içinde herhangi bir sınıfa ait validasyonlar yapılabilir ve bu SOC'a uygundur.
+2.Fluent validations ile validasyonlar farklı sınıflar içinde yapıldığı için unit test yazma süreci daha da kolaylaşacak.
+3.Default data annotations'a(attributes)  göre daha fazla validasyon seçeneği sunar ve custom validation yazmayı kolaylaştırır.
+4.MVC tarafında birkaç özelliği kullanmayı engelleyecek ilerde göreceğiz  ama api tarafında sıkıntı yok.
