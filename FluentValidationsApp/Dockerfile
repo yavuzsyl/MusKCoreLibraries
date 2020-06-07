@@ -10,4 +10,4 @@ COPY --from=lelele /app/out .
 ENV ASPNETCORE_URLS="http://*:4999"
 ENV FluentDbCon="Data Source=.;Initial Catalog=FluentDB;Integrated Security=true;Connect Timeout=33"
 ENV ASPNETCORE_ENVIRONMENT="DEVELOPMENT"
-ENTRYPOINT["dotnet","FluentValidationsApp.dll"]
+ENTRYPOINT ["dotnet","FluentValidationsApp.dll"]

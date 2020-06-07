@@ -42,7 +42,7 @@ namespace FluentValidationsApp
             //proeje fluent validations eklenir
             services.AddControllersWithViews()
                 .AddFluentValidation(options =>
-                {//projede kullanılan validator sınıflarını tek tek eklemek yerine bu metod kullanılarak startup sınıfına ait assmbly içindeki IValidator interfaceini implemente eden tüm sınıfları burada containera ekleyebilirz
+                {//projede kullanılan validator sınıflarını tek tek eklemek yerine bu metod kullanılarak startup sınıfına ait assembly içindeki IValidator interfaceini implemente eden tüm sınıfları burada containera ekleyebilirz
                     options.RegisterValidatorsFromAssemblyContaining<Startup>();
                 });
         }
