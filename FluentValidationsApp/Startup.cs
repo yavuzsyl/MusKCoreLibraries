@@ -1,7 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidationsApp.FluentValidations;
+using FluentValidationsApp.Models;
 using FluentValidationsApp.Models.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,9 +33,18 @@ namespace FluentValidationsApp
             {
                 options.UseSqlServer(Configuration.GetConnectionString("FluentDbCon"));
                 //options.UseSqlServer(Configuration["FluentDbCon"]);
-            
+
             });
-            services.AddControllersWithViews();
+
+            //projede kullanılan validator sınıflarını service containerı içine tek tek eklemek için 
+            //services.AddSingleton<IValidator<Customer>, CustomerValidatior>();
+
+            //proeje fluent validations eklenir
+            services.AddControllersWithViews()
+                .AddFluentValidation(options =>
+                {//projede kullanılan validator sınıflarını tek tek eklemek yerine bu metod kullanılarak startup sınıfına ait assmbly içindeki IValidator interfaceini implemente eden tüm sınıfları burada containera ekleyebilirz
+                    options.RegisterValidatorsFromAssemblyContaining<Startup>();
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

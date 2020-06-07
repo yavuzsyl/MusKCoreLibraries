@@ -5,3 +5,13 @@ neden fluent validations  tercih edilmeli zaten  asp net core a ait validasyonla
 2.Fluent validations ile validasyonlar farklı sınıflar içinde yapıldığı için unit test yazma süreci daha da kolaylaşacak.
 3.Default data annotations'a(attributes)  göre daha fazla validasyon seçeneği sunar ve custom validation yazmayı kolaylaştırır.
 4.MVC tarafında birkaç özelliği kullanmayı engelleyecek ilerde göreceğiz  ama api tarafında sıkıntı yok.
+
+##2 CustomerValidatior.cs in oluşturulması
+#FluentValidation.AspNetCore proje eklenir
+#Oluşturlan validatior sınıfları FluentValidations kütüphanesine ait AbstractValidatior<Customer> sınıfını inherit etmesi gerekecek
+#validaston kuralları ctor içinde abstractvalidator sınıfına ait rulefor metodu ile her property için yazılır
+#fluent validations ile SOC prensibine uygun olarak proje yapısı oluşturulmuş olur ve unit test yazma süreci daha da kolaylaşır farklı sınıflarda validasyon işlemleri yapıldığı için
+# oluşturulan validator sınıflarının  çalışabilmesi için projede tanımlanması gerekir bunun için startup sınıfı içinde configureservices metodunda addcontrollerwithviews metodu ile dönen IMVCbuilder tipindeki nesne ile FluentValidations projeye eklenir
+#oluşturulan her sınıfı kullanabilmek için containera bu sınıfların eklenmesi gerekir bunun için tek tek olarak bu sınıfları ekleyebiliriz yada AddFluentValidations metodu ile bu assembly içindeki tüm validator sınıflarını containera ekleyebiliriz
+#fluent validations ile hem client hemde server taraflı validaston işlemi yapılır model üzerinden eğer kullanıcı browserdan javascript i kapatırsa sadece server taraflı validasyon çalışmaya devam eder(bu sadece mvc web app için geçerli çünkü burada uygulama hem client hemde server tarafı içerecek).
+  api projeleri için sadece server taraflı validasyon yapılacak çünkü api tarafında sadece server olacak
