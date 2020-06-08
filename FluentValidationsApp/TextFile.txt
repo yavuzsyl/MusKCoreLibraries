@@ -15,3 +15,15 @@ neden fluent validations  tercih edilmeli zaten  asp net core a ait validasyonla
 #oluşturulan her sınıfı kullanabilmek için containera bu sınıfların eklenmesi gerekir bunun için tek tek olarak bu sınıfları ekleyebiliriz yada AddFluentValidations metodu ile bu assembly içindeki tüm validator sınıflarını containera ekleyebiliriz
 #fluent validations ile hem client hemde server taraflı validaston işlemi yapılır model üzerinden, eğer kullanıcı browserdan javascript i kapatırsa sadece server taraflı validasyon çalışmaya devam eder(bu sadece mvc web app için geçerli çünkü burada uygulama hem client hemde server tarafı içerecek).
   api projeleri için sadece server taraflı validasyon yapılacak çünkü api tarafında sadece server olacak
+
+#3/2b6v CustomValidator nasıl yazılır ?
+#bazen default gelen validasyon metotları ihtiyacı karşılayamayabilir bunun için kendi validasyon metotlarımızı yazmamız gerekecek
+#Validator sınıfda must metodu ile custom validasyon kuralı yazılabilir
+#custom yazılan validasyonlar sadece server tarafda çalışır, client tarafda da aynı validasyon yapılması için javascript ile tekrar client tarafda validasyon yazılması gerekir 1.dezavantaj
+#2.dezavantaj default gelen her validasyon metodunun client tarafda karşlığı yok, enumvalidator, credit validator ...
+
+#4/2b7v IValidator.Validate() metodu 
+#valide edilmek istenen sınıfı bu metot ile valide edebiliriz
+#fluentvalidations ile yazılan validasyonlar ModelState propertysi ile birlikte çalışır eğer modelstate kullanılmayacaksa Validate() metoduna kullanmak gerekir
+#Validate metodu IValidate interfaceinden gelir bunu kullanmak için gerekli sınıflarda(controller,manager gibi) inject etmek gerekecek tabi eğer valide edilmek istenen modelin validator sınıfı varsa
+#ikinci seçenek olarak not recommended  custom validator sınıfından nesne örneği alarak kullanılabilir.

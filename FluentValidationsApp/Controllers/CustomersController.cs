@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FluentValidationsApp.Models;
 using FluentValidationsApp.Models.Data;
+using FluentValidation;
 
 namespace FluentValidationsApp.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IValidator<Customer> _customerValidtor;
 
-        public CustomersController(AppDbContext context)
+        public CustomersController(AppDbContext context, IValidator<Customer> customerValidtor)
         {
             _context = context;
+            _customerValidtor = customerValidtor;
         }
 
         // GET: Customers
@@ -54,14 +57,17 @@ namespace FluentValidationsApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Age")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Name,Email,Age,BirthDate")] Customer customer)
         {
-            if (ModelState.IsValid)
+            var result = _customerValidtor.Validate(customer);
+            if (result.IsValid)
             {
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.errors = result.Errors;
+
             return View(customer);
         }
 
@@ -86,7 +92,7 @@ namespace FluentValidationsApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Age")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Age,BirthDate")] Customer customer)
         {
             if (id != customer.Id)
             {
