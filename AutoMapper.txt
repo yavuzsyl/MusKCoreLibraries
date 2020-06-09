@@ -17,3 +17,8 @@ Profiler sınıfı AutoMapper dan gelen profile sınıfından inherit edilir ve 
 #b4 farklı property isimlerine sahip modellerin mapplenmesi
 Hangi propertynin hangisi ile eşleceği belirtiilir
         CreateMap<Customer, CustomerDtoDN>().ForMember(x => x.KnownFor, mops => mops.MapFrom(m => m.Name));
+
+#b5 metodun propertye mapplenmesi
+mapplenecek metodun başına Get gelmeli ve Get devamında gelecek isim mapplenecek modeldeki property ile aynı olmalı
+GetFullName() > prop:Fulname
+eğer aynı değilse hangi metot ile hangi propertynin mappleneceği profile sınıfında belirtilir

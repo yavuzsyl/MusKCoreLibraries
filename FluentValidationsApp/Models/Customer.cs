@@ -19,7 +19,17 @@ namespace FluentValidationsApp.Models
         public int Age { get; set; }
         public DateTime? BirthDate { get; set; }
         public Gender Gender { get; set; }
+        public List<Address> Addresses { get; set; }
+        
+        public string GetFullInfo()
+        {
+            return $"{Name}-{Email}-{Age}-{BirthDate}";
+        }
 
-        public List<Address> Addresses { get; set; } 
+        public string GetFullInfoV2()
+        {
+            return $"{Name}-{Email}-{Age}-{BirthDate}";
+        }
+
     }
 }

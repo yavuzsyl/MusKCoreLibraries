@@ -10,6 +10,7 @@ using FluentValidationsApp.Models.Data;
 using FluentValidation;
 using AutoMapper;
 using FluentValidationsApp.DTOS;
+using Microsoft.AspNetCore.Routing;
 
 namespace FluentValidationsApp.Controllers
 {
@@ -28,13 +29,28 @@ namespace FluentValidationsApp.Controllers
             this.mapper = mapper;
         }
 
+        [Route("/Mappex")]
+        [HttpGet]
+        public async Task<IActionResult> MapeEx()
+        {
+            return await Task.Run(() => Ok(mapper.Map<CustomerDtoDN>(new Customer()
+            {
+                Id = 1,
+                Name = "asd",
+                Age = 5,
+                BirthDate = DateTime.Now.Date,
+                Email = "asd@mail.com",
+
+            })));
+        }
+
         // GET: api/CustomerApi
         [HttpGet]
         public async Task<IActionResult> GetCustomers()
         {
             var customers = await _context.Customers.ToListAsync();
-            // return Ok(mapper.Map<List<CustomerDto>>(source: customers));
-            return Ok(mapper.Map<List<CustomerDtoDN>>(source: customers));
+            return Ok(mapper.Map<List<CustomerDto>>(source: customers));
+            //return Ok(mapper.Map<List<CustomerDtoDN>>(source: customers));
 
         }
 

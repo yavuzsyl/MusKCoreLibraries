@@ -7,5 +7,7 @@ namespace FluentValidationsApp.DTOS
         public string KnownFor { get; set; }
         public string Contact { get; set; }
         public int YearsOld { get; set; }
+        public string FullInfo { get; set; }
+
     }
 }
