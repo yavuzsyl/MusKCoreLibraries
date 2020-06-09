@@ -1,0 +1,3 @@
+#Automapper nedir ve neden kullanmalıyız ?
+1.Entity modelini tamamen dış dünyaya açmamak için
+2.Businessı domaine bağımlı kılmamamk için
