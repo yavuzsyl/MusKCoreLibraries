@@ -1,3 +1,15 @@
 #Automapper nedir ve neden kullanmalıyız ?
 1.Entity modelini tamamen dış dünyaya açmamak için
 2.Businessı domaine bağımlı kılmamamk için
+
+#b3
+AutoMapper.Extensions.Microsoft.DependencyInjection package
+servis containerına automapper servisi eklenir böylece sınıflarda kolayca inject edilebiliecek
+            services.AddAutoMapper(typeof(Startup));
+Daha sonra modeller arasındaki mapping işlemlerini automappera tanımlamak için profile sınıfları oluşturulur
+Profiler sınıfı AutoMapper dan gelen profile sınıfından inherit edilir ve ctor da modeller arası mappingler tanımlanır
+    CreateMap<Customer,CustomerDto>();
+    CreateMap<CustomerDto,Customer>();
+
+ çift taraflı mapping ayrı ayrı yazmak yerine
+            CreateMap<Customer,CustomerDto>().ReverseMap();
