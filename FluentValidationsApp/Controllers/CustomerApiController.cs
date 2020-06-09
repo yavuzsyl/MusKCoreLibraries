@@ -33,7 +33,9 @@ namespace FluentValidationsApp.Controllers
         public async Task<IActionResult> GetCustomers()
         {
             var customers = await _context.Customers.ToListAsync();
-            return Ok(mapper.Map<List<CustomerDto>>(source: customers));
+            // return Ok(mapper.Map<List<CustomerDto>>(source: customers));
+            return Ok(mapper.Map<List<CustomerDtoDN>>(source: customers));
+
         }
 
         // GET: api/CustomerApi/5

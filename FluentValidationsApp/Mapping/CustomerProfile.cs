@@ -8,8 +8,15 @@ namespace FluentValidationsApp.Mapping
     {
         public CustomerProfile()
         {
-            CreateMap<Customer,CustomerDto>();
-            CreateMap<CustomerDto,Customer>();
+            // CreateMap<Customer,CustomerDto>();
+            // CreateMap<CustomerDto,Customer>();
+
+            //çift taraflı mapping ayrı ayrı yazmak yerine
+            CreateMap<Customer,CustomerDto>().ReverseMap();
+            CreateMap<Customer, CustomerDtoDN>()
+                .ForMember(dest => dest.KnownFor, mops => mops.MapFrom(m => m.Name))
+                .ForMember(dest => dest.Contact, memberopts => memberopts.MapFrom(m => m.Email))
+                .ForMember(dest => dest.YearsOld, memberopts => memberopts.MapFrom(m => m.Age));
         }
     }
 }

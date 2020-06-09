@@ -13,3 +13,7 @@ Profiler sınıfı AutoMapper dan gelen profile sınıfından inherit edilir ve 
 
  çift taraflı mapping ayrı ayrı yazmak yerine
             CreateMap<Customer,CustomerDto>().ReverseMap();
+
+#b4 farklı property isimlerine sahip modellerin mapplenmesi
+Hangi propertynin hangisi ile eşleceği belirtiilir
+        CreateMap<Customer, CustomerDtoDN>().ForMember(x => x.KnownFor, mops => mops.MapFrom(m => m.Name));
