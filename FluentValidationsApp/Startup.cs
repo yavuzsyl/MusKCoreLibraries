@@ -10,6 +10,7 @@ using FluentValidationsApp.Models.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +46,12 @@ namespace FluentValidationsApp
                 {//projede kullanılan validator sınıflarını tek tek eklemek yerine bu metod kullanılarak startup sınıfına ait assembly içindeki IValidator interfaceini implemente eden tüm sınıfları burada containera ekleyebilirz
                     options.RegisterValidatorsFromAssemblyContaining<Startup>();
                 });
+
+            //default modelstate filterı kapatıldı custom olarak handle edilecek
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -30,3 +30,6 @@ neden fluent validations  tercih edilmeli zaten  asp net core a ait validasyonla
 
 #52b/8v One to many ilişkili sınıflarda validasyon yazılması
 https://docs.fluentvalidation.net/en/latest/index.html
+
+
+#6/b2v9 API COntrollerdan custom hata mesajı dönme
