@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidationsApp.Models;
 using FluentValidationsApp.Models.Data;
 using FluentValidation;
+using FluentValidationsApp.FluentValidations;
 
 namespace FluentValidationsApp.Controllers
 {
@@ -49,6 +50,7 @@ namespace FluentValidationsApp.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            var list = new Customer();
             return View();
         }
 
@@ -57,8 +59,16 @@ namespace FluentValidationsApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Email,Age,BirthDate")] Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
+            //AddressValidator validationRules = new AddressValidator();
+            //customer.Addresses.ForEach(x =>
+            //{
+            //    validationRules.Validate(x);
+
+            //});
+
+
             var result = _customerValidtor.Validate(customer);
             if (result.IsValid)
             {

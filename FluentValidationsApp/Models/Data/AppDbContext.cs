@@ -10,6 +10,7 @@ namespace FluentValidationsApp.Models.Data
     {
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         //options ile bu context.cs de kullanılacak sql provider belirtilecek ve varsa ek ayarlar
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

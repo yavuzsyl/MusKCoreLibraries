@@ -32,6 +32,29 @@
                 <input asp-for="BirthDate" class="form-control" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
+            <hr />
+            <h1>Addresses</h1>
+            @for (int i = 0; i < 2; i++)
+            {
+                //Model.Addresses.Add(new Address());
+                <div class="form-group">
+                    <label asp-for="Addresses[i].Description" class="control-label"></label>
+                    <input asp-for="Addresses[i].Description" class="form-control" />
+                    <span asp-validation-for="Addresses[i].Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Addresses[i].City" class="control-label"></label>
+                    <input asp-for="Addresses[i].City" class="form-control" />
+                    <span asp-validation-for="Addresses[i].City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Addresses[i].PostCode" class="control-label"></label>
+                    <input asp-for="Addresses[i].PostCode" class="form-control" />
+                    <span asp-validation-for="Addresses[i].PostCode" class="text-danger"></span>
+                </div>
+
+            }
+            <hr />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -8,12 +8,17 @@ namespace FluentValidationsApp.Models
 {
     public class Customer
     {
+        public Customer()
+        {
+            Addresses = new List<Address>();
+        }
         public int Id { get; set; }
         /*[Required(ErrorMessage ="Name alanı boş olamaz")] *//*if we dont use fluentvalidations we have to use data annotation to validate our proerties*/
         public string Name { get; set; }
         public string Email { get; set; }
         public int Age { get; set; }
         public DateTime? BirthDate { get; set; }
-
+        
+        public List<Address> Addresses { get; set; } 
     }
 }

@@ -21,6 +21,8 @@ namespace FluentValidationsApp.FluentValidations
             {
                 return DateTime.Now.AddYears(-18) >= x;
             }).WithMessage("Yaş sınırı 18'dir.");
+
+            RuleForEach(x => x.Addresses).SetValidator(new AddressValidator());
         }
     }
 }

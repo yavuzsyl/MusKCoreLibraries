@@ -27,3 +27,6 @@ neden fluent validations  tercih edilmeli zaten  asp net core a ait validasyonla
 #fluentvalidations ile yazılan validasyonlar ModelState propertysi ile birlikte çalışır eğer modelstate kullanılmayacaksa Validate() metoduna kullanmak gerekir
 #Validate metodu IValidate interfaceinden gelir bunu kullanmak için gerekli sınıflarda(controller,manager gibi) inject etmek gerekecek tabi eğer valide edilmek istenen modelin validator sınıfı varsa
 #ikinci seçenek olarak not recommended  custom validator sınıfından nesne örneği alarak kullanılabilir.
+
+#52b/8v One to many ilişkili sınıflarda validasyon yazılması
+https://docs.fluentvalidation.net/en/latest/index.html
