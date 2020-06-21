@@ -26,4 +26,30 @@ L:services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); API ye gel
 L:services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>(); asıl servis son rate limit konfigürasyonlarını servise ekle
 
 L:app.UseIpRateLimiting(); middleware i configure metoduna- uygulama request pipelinenına eklenerek gelen requestlar handle edilecek bu middleware ile. tabi bu middlewarein çalışabilmesi için servis containerı içine gerekli servisler eklendir ykardakiler 
+https://github.com/stefanprodan/AspNetCoreRateLimit/wiki/IpRateLimitMiddleware#setup
+ "EnableEndpointRateLimiting": true, //end point seviyesinde rate limit yapmak için 
+    "StackBlockedRequests": true, //dakikada 100, saatte 1000 istek sınırı varsa eğer dakikada 150 istek geldiği zaman bu 50 tane fazladan fail olan istekler saatte max gelebilecek 1000 istek içinde sayılmalımı sayılmamamamamamamamamalımı
+        //"IpWhitelist": [ "127.0.0.1", "::1/10"],//sınırsız istek attabilecek ip adresleri sırayla  local ipv4 , local ipv6(::1/10 1ile 10 arasındaki adrsler) ve diğer başka ip adresleri eklenebilir
+      "GeneralRules": [
+      {
+        "Endpoint": "*:/weatherforecast/Get",
+        "Period": "5s",//1s(m,h) de 2 adet request belirtilen endpointlere atılabilir
+        "Limit": 4
+      }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
 
+      Aynı rootinge sahip get ve post metoları ayrımı yapmak için =>
+      "GeneralRules": [
+      {
+        "Endpoint": "GET:/weatherforecast",
+        "Period": "5s",//1s(m,h) de 2 adet request belirtilen endpointlere atılabilir
+        "Limit": 4
+      }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
+
+            "GeneralRules": [
+      {
+        "Endpoint": "POST:/weatherforecast",
+        "Period": "5s",//1s(m,h) de 2 adet request belirtilen endpointlere atılabilir
+        "Limit": 4
+      }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
+
+kalan limite ve süreye request response headerı içinden X-Rate-Limit-Limit,X-Rate-Limit-Remaining den bakılabilir

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace RateLimitApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -35,6 +35,20 @@ namespace RateLimitApp.Controllers
             })
             .ToArray()));
             
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetV2()
+        {
+            var rng = new Random();
+            return await Task.Run(() => Ok(Enumerable.Range(1, 10).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray()));
+
         }
     }
 }
