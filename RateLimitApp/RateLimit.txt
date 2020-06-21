@@ -1,0 +1,29 @@
+﻿https://github.com/stefanprodan/AspNetCoreRateLimit
+RateLimit 
+V17 ?
+L:1.Güvenlik(security) -- dDOS saldırılarına karşı serverın düşmesini engellemek için vs 
+  2.Ölçeklenebilirlik(scalability) --servisin sunduğu veri akışını stabil sürede tutabilmek için sınırlama getirilebilir
+L:1.IP Rate Limit - gelen http request içinde kullanıcı ip adresine göre rate limit
+  2.Client id rate limit gelen http request içinde belirtilen client id ye göre rate limit -- uygulamamıza ait client ip adresi sabit ise burada clienttan gelecek request limiti belirlenebilir ,
+  eğer servisler dışarı açıksa rate limit koyulması gerekir 
+
+V18:IP Rate limit 1
+AspNetCoreRateLimit package
+L:Startup configure services de appsettingse yazılan rate limit konfigürasyonları service containerına eklenir 
+L:Gelecek request sayılarını takip edebilmek için  non distributed configure services de servislere eklenir | bu cache server tarafda tutulacak
+L:services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting")); kütüphaneye ait options sınıfı eklenir ve .json file dan konfigurasyonlar okunur
+services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies")); eklenecek custom policy ler için şu ip ye şu kadar rate limit gibi
+
+L:eğer uygulama tek instance ile ayağı kaldırılacaksa non-distributed memoryCache kullanılabilir ama 1 den fazla instance olarak uygulama ayağı kaldırılacaksa her instance a gelen request adet bilgilerinin tutarlı olması için distributed cache(redis) gibi bir cache de tutularak her instance a gelen request sayıları veya diğer cache e atılan veriler tutarlı olur. merkezi dağıtılmış cache sistemi =>
+####A distributed cache pools the RAM of multiple computers into a single in-memory data store used as a data cache to provide fast access to data.#####
+
+
+L:services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>(); aspnetcoreratelimit kütüphanesine ait interface ve class lar kullanılarak ratelimit policyleri memory cache de tutulur 
+services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>(); ve gelen request sayılarıda memorycache de tutulur.
+
+L:services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); API ye gelen isteklere ait request içereğine ulaşabilmek maksadı ile classlara inject edebilmek için servislere httpcontextaccesor eklenir. aspnetcore rate limit kütüphanesinin bu servisi kullanabilmesi için
+
+L:services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>(); asıl servis son rate limit konfigürasyonlarını servise ekle
+
+L:app.UseIpRateLimiting(); middleware i configure metoduna- uygulama request pipelinenına eklenerek gelen requestlar handle edilecek bu middleware ile. tabi bu middlewarein çalışabilmesi için servis containerı içine gerekli servisler eklendir ykardakiler 
+
