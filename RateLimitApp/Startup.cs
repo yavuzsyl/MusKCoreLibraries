@@ -40,6 +40,7 @@ namespace RateLimitApp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            
 
             #endregion
             services.AddControllers();

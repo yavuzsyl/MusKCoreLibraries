@@ -25,10 +25,10 @@ L:services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); API ye gel
 
 L:services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>(); asıl servis son rate limit konfigürasyonlarını servise ekle
 
-L:app.UseIpRateLimiting(); middleware i configure metoduna- uygulama request pipelinenına eklenerek gelen requestlar handle edilecek bu middleware ile. tabi bu middlewarein çalışabilmesi için servis containerı içine gerekli servisler eklendir ykardakiler 
+L:app.UseIpRateLimiting(); middleware i configure metoduna- uygulama request pipelinenına eklenerek gelen requestlar handle edilecek bu middleware ile. tabi bu middlewarein çalışabilmesi için servis containerı içine gerekli servisler eklenmelidir yukardakiler 
 https://github.com/stefanprodan/AspNetCoreRateLimit/wiki/IpRateLimitMiddleware#setup
  "EnableEndpointRateLimiting": true, //end point seviyesinde rate limit yapmak için 
-    "StackBlockedRequests": true, //dakikada 100, saatte 1000 istek sınırı varsa eğer dakikada 150 istek geldiği zaman bu 50 tane fazladan fail olan istekler saatte max gelebilecek 1000 istek içinde sayılmalımı sayılmamamamamamamamamalımı
+    "StackBlockedRequests": false, //dakikada 100, saatte 1000 istek sınırı varsa eğer dakikada 150 istek geldiği zaman bu 50 tane fazladan fail olan istekler saatte max gelebilecek 1000 istek içinde sayılmalımı sayılmamamamamamamamamalımı
         //"IpWhitelist": [ "127.0.0.1", "::1/10"],//sınırsız istek attabilecek ip adresleri sırayla  local ipv4 , local ipv6(::1/10 1ile 10 arasındaki adrsler) ve diğer başka ip adresleri eklenebilir
       "GeneralRules": [
       {
@@ -53,3 +53,13 @@ https://github.com/stefanprodan/AspNetCoreRateLimit/wiki/IpRateLimitMiddleware#s
       }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
 
 kalan limite ve süreye request response headerı içinden X-Rate-Limit-Limit,X-Rate-Limit-Remaining den bakılabilir
+
+IP Rate Limit Policies  : Spesifik ip ler için policy-şartnameler xd
+L:policy içinde yazılan kurallar genel kuralları override eder ezzzzzzer ama kapsamına göre, hangisinin kapsamı daha küçükse o kural geçerli olur
+uygulama ayağa kakacağı zaman hostbuilder oluşturulurken appsettingsdeki genel kurallar startup içinden okunuyor default olarak uygulamaya bu ayarlar seed ediliyor, policyler içinde hostbuilder oluşturulurken appsettingsdeki verilen key ile konfigürasyonlar okunuyor ama policyler için bu konfigürasyonlar uygulamaya seed edilmiyor bunun yapılması lazım
+
+uygulamanın herhangi bir yerinden context.HttpContext.RequestServices(serviceprovider).GetRequiredService<IResponseCacheService>(); http context üzerinden veya direkt olarak IServiceProvider ile dependency injection containerı içinde bulunan servislere erişilebilir GetService yoksa null GetRequiredService yoksa exception fırlatır
+
+
+//"RealIpHeader": "x-ip", //load balancer gelen istekleri ayaktaki insatancelara dağıtır ve request headerına clientın ip adresi eklenir bu ip adresine ulaşmak için buraya load balancerın request headerına eklediği key değeri  yazılır ve client ip adresi buradan okunur
+The RealIpHeader is used to extract the client IP when your Kestrel server is behind a reverse proxy, if your proxy uses a different header then X-Real-IP use this option to set it up.
