@@ -33,13 +33,14 @@ namespace FluentValidationsApp.Controllers
         [HttpGet]
         public async Task<IActionResult> MapeEx()
         {
-            return await Task.Run(() => Ok(mapper.Map<CustomerDtoDN>(new Customer()
+            return await Task.Run(() => Ok(mapper.Map<CustomerDto>(new Customer()
             {
                 Id = 1,
                 Name = "asd",
                 Age = 5,
                 BirthDate = DateTime.Now.Date,
                 Email = "asd@mail.com",
+                CreditCard = new CreditCard { Number = "712939192", ValidDate = DateTime.Now.Date }
 
             })));
         }

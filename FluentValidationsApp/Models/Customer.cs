@@ -19,7 +19,9 @@ namespace FluentValidationsApp.Models
         public int Age { get; set; }
         public DateTime? BirthDate { get; set; }
         public Gender Gender { get; set; }
-        public List<Address> Addresses { get; set; }
+        public List<Address> Addresses { get; set; } = new List<Address>();
+
+        public CreditCard CreditCard { get; set; }
         
         public string GetFullInfo()
         {

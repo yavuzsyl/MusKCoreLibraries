@@ -51,7 +51,7 @@ namespace FluentValidationsApp.Controllers
         public IActionResult Create()
         {
             var list = new Customer();
-            return View();
+            return View(list);
         }
 
         // POST: Customers/Create

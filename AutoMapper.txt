@@ -22,3 +22,18 @@ Hangi propertynin hangisi ile eşleceği belirtiilir
 mapplenecek metodun başına Get gelmeli ve Get devamında gelecek isim mapplenecek modeldeki property ile aynı olmalı
 GetFullName() > prop:Fulname
 eğer aynı değilse hangi metot ile hangi propertynin mappleneceği profile sınıfında belirtilir
+
+
+V14 Flattening
+Başka bir sınıfa mapplenecek ana sınıf içinde bulunan type propertynin(lerin) propertyleri mapplenecek sınıf içinde başına sınıf ismi gelecek şekilde yazılırsa mappleme gerçekleşir.
+Ex : public class CreditCard{ => class Dto {  public DateTime CreditCardValidDate     }
+    public DateTime ValidDate
+}
+Mapplenecek sınıf içinde typeın mappleneceği propertyler custom olarak yazılacaksa profiler sınıfında belirtilmeli not recommended
+
+V15 IncludeMembers
+For complex types
+L:mapplenecek ana sınıfa ait type propertyler mapplenecek hedef sınıf içinde aynı isimlerle mapplenebilmesi için inner type ile hedef sınıf arasında map create edilir ve normal class hedef class mappleme konfigürasyonunda IncludeMmebers metodu ile inner type include edilir
+
+V16 Projection
+DateTime => year,month,day propertylerine mappleme

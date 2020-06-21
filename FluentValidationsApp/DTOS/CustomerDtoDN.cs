@@ -1,3 +1,5 @@
+using System;
+
 namespace FluentValidationsApp.DTOS
 {
     public class CustomerDtoDN
@@ -9,5 +11,7 @@ namespace FluentValidationsApp.DTOS
         public int YearsOld { get; set; }
         public string FullInfo { get; set; }
 
+        public string CCName { get; set; }
+        public DateTime CCValidDate { get; set; }
     }
 }
