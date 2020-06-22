@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
 namespace RateLimitApp.Controllers
@@ -49,6 +50,22 @@ namespace RateLimitApp.Controllers
             })
             .ToArray()));
 
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Putit()
+        {
+            string asd = "24";
+            int fsa = 0;
+            await Task.Run(() => fsa = int.Parse(asd));
+            return Ok();
+        }
+
+        //[HttpGet]route içinde belirtmeden parametre gönderilmek isteniyorsa parametre isimleri request urlinde querystring olarak yazılır , eğer veriler routedan alınmak isteniyorsa route gelecek parametrelere göre düzenlenir [HttpGet("{name}")] /controller/action/isim gibi
+        [HttpGet("{werwe}/{asd}")]
+        public IActionResult Getit(int werwe,string asd)
+        {
+            return Ok(werwe);
         }
     }
 }

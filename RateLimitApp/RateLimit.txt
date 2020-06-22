@@ -10,7 +10,7 @@ L:1.IP Rate Limit - gelen http request içinde kullanıcı ip adresine göre rat
 V18:IP Rate limit 1
 AspNetCoreRateLimit package
 L:Startup configure services de appsettingse yazılan rate limit konfigürasyonları service containerına eklenir 
-L:Gelecek request sayılarını takip edebilmek için  non distributed configure services de servislere eklenir | bu cache server tarafda tutulacak
+L:Gelecek request sayılarını takip edebilmek için  non distributed cache configure services de servislere eklenir | bu cache server tarafda tutulacak
 L:services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting")); kütüphaneye ait options sınıfı eklenir ve .json file dan konfigurasyonlar okunur
 services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies")); eklenecek custom policy ler için şu ip ye şu kadar rate limit gibi
 
@@ -38,28 +38,42 @@ https://github.com/stefanprodan/AspNetCoreRateLimit/wiki/IpRateLimitMiddleware#s
       }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
 
       Aynı rootinge sahip get ve post metoları ayrımı yapmak için =>
-      "GeneralRules": [
       {
         "Endpoint": "GET:/weatherforecast",
         "Period": "5s",//1s(m,h) de 2 adet request belirtilen endpointlere atılabilir
         "Limit": 4
       }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
 
-            "GeneralRules": [
       {
         "Endpoint": "POST:/weatherforecast",
         "Period": "5s",//1s(m,h) de 2 adet request belirtilen endpointlere atılabilir
         "Limit": 4
       }, ile spesifik olarak limit koyulacak endpoint/rooting belirtilebilir
-
+      ]
 kalan limite ve süreye request response headerı içinden X-Rate-Limit-Limit,X-Rate-Limit-Remaining den bakılabilir
 
 IP Rate Limit Policies  : Spesifik ip ler için policy-şartnameler xd
 L:policy içinde yazılan kurallar genel kuralları override eder ezzzzzzer ama kapsamına göre, hangisinin kapsamı daha küçükse o kural geçerli olur
-uygulama ayağa kakacağı zaman hostbuilder oluşturulurken appsettingsdeki genel kurallar startup içinden okunuyor default olarak uygulamaya bu ayarlar seed ediliyor, policyler içinde hostbuilder oluşturulurken appsettingsdeki verilen key ile konfigürasyonlar okunuyor ama policyler için bu konfigürasyonlar uygulamaya seed edilmiyor bunun yapılması lazım
+uygulama ayağa kakacağı zaman hostbuilder oluşturulurken appsettingsdeki genel kurallar startup içinden okunuyor default olarak uygulamaya bu ayarlar seed ediliyor, policyler için de hostbuilder oluşturulurken appsettingsdeki verilen key ile konfigürasyonlar okunuyor ama policyler için bu konfigürasyonlar uygulamaya seed edilmiyor bunun yapılması lazım
 
 uygulamanın herhangi bir yerinden context.HttpContext.RequestServices(serviceprovider).GetRequiredService<IResponseCacheService>(); http context üzerinden veya direkt olarak IServiceProvider ile dependency injection containerı içinde bulunan servislere erişilebilir GetService yoksa null GetRequiredService yoksa exception fırlatır
 
 
 //"RealIpHeader": "x-ip", //load balancer gelen istekleri ayaktaki insatancelara dağıtır ve request headerına clientın ip adresi eklenir bu ip adresine ulaşmak için buraya load balancerın request headerına eklediği key değeri  yazılır ve client ip adresi buradan okunur
 The RealIpHeader is used to extract the client IP when your Kestrel server is behind a reverse proxy, if your proxy uses a different header then X-Real-IP use this option to set it up.
+
+
+V21:EndpointWhitelist limitless eps , limit koymak istemediğmiz ep leri burada belirtebiliriz
+
+V22:Quota Exceeded Response : request kotası aşıldı responseı
+ "QuotaExceededResponse": {
+    "Content":  "{{ \"message\":\"request limiti aşıldı.\", \"Detail\":\"izin verilen request sayısı {1}'de {0} istektir. {2} saniye sonra tekrar deneyiniz\" }}",
+    "ContentType": "application/json"
+    },
+Response body de dönecek
+
+V23:Parametre alan metotlarda limit kuralı
+
+
+V24:Client Rate Limit
+request headerına custom eklenip gönderilen client id ye göre rate limiting yapılır
