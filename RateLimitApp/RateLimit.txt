@@ -75,5 +75,10 @@ Response body de dönecek
 V23:Parametre alan metotlarda limit kuralı
 
 
-V24:Client Rate Limit
+V24:Client Rate Limit:gelen clienta göre rate limit belirleme
 request headerına custom eklenip gönderilen client id ye göre rate limiting yapılır
+startup.cs configureservices içinde ip rate limit yerine client rate limit servisleri eklenir.
+app.UseClientRateLimiting(); middleware ide pipeline a eklenir.
+
+client ip adresi statik ise ip adresi kullanılmalı best practiceieieieieieieie
+client id kullanılması ip üzerinden kısıtlamaya göre daha az güveniklidir
