@@ -16,3 +16,11 @@ kullanılan sayfada bundle eklenir <script src="js-bundle"></script>
 @addTagHelper *, Smidge tag helperları kullanabilmek için  viewimporta smidge tag helperlar eklenir   
 
 dosyalar iki taraflı olarak browser ve server tarafda cachelenir development sırasında cache disable edilerek geliştirlemler güncel görüntülenebilir
+
+V27:Development ortamda js-css dosyaları bundle edilmez debug edebilmek ve geliştirmeyi rahat yapabilmek için
+Bundle işlemi PRODUCTION ortam için yapılmalı
+
+Smidge kütüphanesinden gelen debug tag helper kullanılarak development ortamda bundle işlemi yapılmadan dosyalar normal halleri ile kullanılacak
+    <environment names="Development">                    => asp net env tag helper ile env belirtilir
+        <script src="js-bundle" debug="true"></script>   => smidge debug tag helper ile debug mod true ya çekilerek bundle işlemi yapılmaz
+    </environment>

@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SmidgeBundleMinification</title>
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />*@
-    <link rel="stylesheet" href="css-bundle" />
+        <link rel="stylesheet" href="~/css/site.css" />*@
+    <environment names="Development">
+        <link rel="stylesheet" href="css-bundle" debug="true" />
+    </environment>
+    <environment names="Production">
+        <link rel="stylesheet" href="css-bundle" debug="false" />
+    </environment>
 </head>
 <body>
     <header>
@@ -43,7 +48,16 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js-bundle"></script>
+    <environment names="Development">
+
+        <script src="js-bundle" debug="true"></script>
+
+    </environment>
+    <environment names="Production">
+        <script src="js-bundle" ></script>
+
+    </environment>
+
     @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     @RenderSection("Scripts", required: false)
 </body>
