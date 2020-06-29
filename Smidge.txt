@@ -1,0 +1,18 @@
+﻿V25:
+ASP net core uygulamalarındada runtimeda bundling-minification işlemini otomatik gerçekleştiren bir kütüphanedir Smidge 
+bundling-Minification sitenin ilk yüklenme hızını artırır - daha sonraki istekler browser cacheine alınacağından dolayı sonraki isteklere daha hızlı veri dönecek
+Bundling-1 den fazla dosyayı tek dosya içinde birleştirme işlemi örnek 3js 2 css file olan bir sayfaya istek atılınca serverdan her dosyayı ayrı ayrı getirmek için 5 ayrı istek atılacaktı servera, bu dosyaları yüklemek için ama bundling yapılırsa 3js tek js dosyası ve 2css tek css olacak toplamda 2 istek ile bundle edilmiş dosylar getirilecek
+Minification-2 css || js dosyaları içindeki gereksiz karakterlerden temizlenme işlemidir.(Yorum satırları, white spaceler vs development işleminde kullanılan alanlar)
+minification işlemi dosyanın fonksiyonelitesini bozmadan dosya boyutunu küçültme işlemidir böylece client server arasında daha küçük veriler taşınacağından dolayı yüklemeler daha hızlı olacak
+
+services.AddSmidge(smidgeConfiguration: Configuration.GetSection("smidge")); dependency injection service containerına servis eklenir
+smidge ile uygulamadaki statik dosyalar cacheleniyor ve uygulama her ayağa kalktığında değişiklik varsa bu cache bozularak güncel hali cache e atılıyor.
+cache dosyası da versiyonlanarak her değişmede dosya ismi değişeceğinden dolayı browserlarda yeni dosya olarak cache yükleyecekler
+
+L:tek klasör altında aynı uzantıya sahip dosyalar klasör pathi verilerek direkt bundle edilebilir middleware içinde, dosya isimlerini tek tek yazmka yerine
+
+middleware request pipelinenına eklenir app.UseSmidge(bundle => { bundle.CreateJs(name,path)}); ile bundle oluşturulur
+kullanılan sayfada bundle eklenir <script src="js-bundle"></script>
+@addTagHelper *, Smidge tag helperları kullanabilmek için  viewimporta smidge tag helperlar eklenir   
+
+dosyalar iki taraflı olarak browser ve server tarafda cachelenir development sırasında cache disable edilerek geliştirlemler güncel görüntülenebilir
