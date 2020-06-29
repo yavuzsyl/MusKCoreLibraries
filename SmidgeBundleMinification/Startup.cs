@@ -9,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Smidge;
+using Smidge.Cache;
 using Smidge.Models;
+using Smidge.Options;
 
 namespace SmidgeBundleMinification
 {
@@ -52,7 +54,17 @@ namespace SmidgeBundleMinification
             app.UseSmidge(bundle => {
 
                 //bundle.CreateJs("my-js-bundle", "~/js/");//klasör altındaki tüm js dosyalarını bundle edecek
-                bundle.CreateJs("js-bundle", "~/js/site.js", "~/js/site2.js");
+                bundle.CreateJs("js-bundle", "~/js/site.js", "~/js/site2.js")
+                        .WithEnvironmentOptions(
+                            BundleEnvironmentOptions.Create()
+                                .ForDebug(builder => 
+                                    builder.EnableCompositeProcessing()
+                                           .EnableFileWatcher()
+                                           .SetCacheBusterType<AppDomainLifetimeCacheBuster>()
+                                           .CacheControlOptions(enableEtag:false,cacheControlMaxAge:0)
+                                          )
+                                .Build()
+                         );
                 bundle.CreateCss("css-bundle", "~/css/site.css", "~/lib/bootstrap/dist/css/bootstrap.css");
             
             

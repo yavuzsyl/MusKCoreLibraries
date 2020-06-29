@@ -24,3 +24,16 @@ Smidge kütüphanesinden gelen debug tag helper kullanılarak development ortamd
     <environment names="Development">                    => asp net env tag helper ile env belirtilir
         <script src="js-bundle" debug="true"></script>   => smidge debug tag helper ile debug mod true ya çekilerek bundle işlemi yapılmaz
     </environment>
+
+V28:Appsettingsde belirtilen App_Data klasörü ve bu klasör içinde uygulama ayağa kalkınca bundle edilen dosyalarımızın cachelenmesi yapılacak smidge tarafından 
+development ortamda debug modun true olduğu durumlarda bazen dosyaların bundle edilmesi gerekebilir geliştirmede gözlemleme yapabilmek için middleware içinde env opts ile =>
+.WithEnvironmentOptions(
+   BundleEnvironmentOptions.Create()
+       .ForDebug(builder =>                                                    || debug mod için
+           builder.EnableCompositeProcessing()                                 || bundle ı enable et
+                  .EnableFileWatcher()                                         || dosya izlemeyi aktifleştir değişiklik olduğu zaman güncel gelecek
+                  .SetCacheBusterType<AppDomainLifetimeCacheBuster>()          || dosya lifecycle belirleme - uygulama ömrü olarak her ayağa kalktığında en son halini çekecek
+                  .CacheControlOptions(enableEtag:false,cacheControlMaxAge:0)  || server tarafından gönderilen statik dosyalarda response headerı içinde serverdan etag gönderilir                                                              browser daha sonraki isteklerde servera bu etag ile istek attığı zaman serverdan 304 dönecek ve                                                               bu dosyanın değişmediği anlaşılıp cacheden döndürülecek, cachecontrolMaxAge cache süresi                                                                      belirleme
+                 )
+       .Build()
+);
