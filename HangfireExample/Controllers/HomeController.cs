@@ -23,6 +23,7 @@ namespace HangfireExample.Controllers
         public IActionResult Index()
         {
             FireAndForgetJobs.SendEmailToUser("mailAddress", "halo");
+
             return View();
         }
 
