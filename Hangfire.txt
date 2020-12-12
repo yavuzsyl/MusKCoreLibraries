@@ -1,0 +1,31 @@
+﻿#background jobs
+#db de veya memory de tutulabilir ama herhangi bir db olması daha iyi jobların kaybolmaması için
+
+30# çalışma yapısı
+
+client tarafda job oluşur, db ye kaydet
+clienta geri döner
+server jobları çeker ve çalıştırır
+server jobları çalıştırdıktan sonra db de jobların durumları güncellenir 
+
+31# jobs türleri 
+
+fire and forget : çalıştır ve unut
+delayed : belirli bir süre sonra çalışacak joblar
+recurring : belirli aralıklarda çalışacak joblar
+continuations : herhangi bir job sonrası çalışacak joblar
+
+ücretli
+batch : toplu işlemler ve hazır exception handling
+batch continuations
+
+32# kurulum
+Hangfire.core
+Hangfire.sql
+Hangfire.aspnetcore
+
+startup configure services ve configure da eklemeler yapılır
+proje ilk ayağı kalkarken db de joblar için tablolar oluşacaktır
+appUrl/Hangfire ile job dashboarduna ulaşılabilir
+
+fail olan bir job başarılı olana kadar 10 kere çalışır
