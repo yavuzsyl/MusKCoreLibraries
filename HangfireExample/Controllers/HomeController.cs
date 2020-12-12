@@ -1,10 +1,12 @@
 ﻿using HangfireExample.BackgroundJobs;
 using HangfireExample.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -27,8 +29,25 @@ namespace HangfireExample.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult ImageUpload()
         {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ImageUpload(IFormFile formFile)
+        {
+            var newFileName = string.Empty;
+            if (formFile != null && formFile.Length > 0)
+            {
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/", "images", newFileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+
+                var delayedJobId = BackgroundJobs.DelayedJobs.AddWaterMarkJob(newFileName, "halo");
+            }
             return View();
         }
 

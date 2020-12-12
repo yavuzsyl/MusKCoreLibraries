@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RateLimitApp", "RateLimitAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmidgeBundleMinification", "SmidgeBundleMinification\SmidgeBundleMinification.csproj", "{F82E580E-EFDF-4BCA-8479-BB42713A9444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangfireExample", "HangfireExample\HangfireExample.csproj", "{3215A084-4EDB-4188-9EAE-8D737AFC1997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HangfireExample", "HangfireExample\HangfireExample.csproj", "{3215A084-4EDB-4188-9EAE-8D737AFC1997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
