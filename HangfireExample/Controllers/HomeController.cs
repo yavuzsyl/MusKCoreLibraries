@@ -48,6 +48,8 @@ namespace HangfireExample.Controllers
                 }
 
                 var delayedJobId = BackgroundJobs.DelayedJobs.AddWaterMarkJob(newFileName, "halo");
+                BackgroundJobs.ContinuationsJobs.WriteWaterMarkStatusJob(delayedJobId, newFileName);
+
             }
             return View();
         }
