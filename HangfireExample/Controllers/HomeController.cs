@@ -24,7 +24,7 @@ namespace HangfireExample.Controllers
 
         public IActionResult Index()
         {
-            FireAndForgetJobs.SendEmailToUser("mailAddress", "halo");
+            //FireAndForgetJobs.SendEmailToUser("mailAddress", "halo");
 
             return View();
         }
@@ -36,6 +36,7 @@ namespace HangfireExample.Controllers
         [HttpPost]
         public async Task<IActionResult> ImageUpload(IFormFile formFile)
         {
+            BackgroundJobs.RecurringJobs.ReportingJob();
             var newFileName = string.Empty;
             if (formFile != null && formFile.Length > 0)
             {
