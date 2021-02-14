@@ -1,2 +1,2 @@
 # MusKCoreLibraries
-AutoMapper, RateLimit and smidge seperated to different branches
+AutoMapper, RateLimit, Hangfire and smidge seperated to different branches
